@@ -9,7 +9,6 @@
 // a number that indicates how many uppercase “B” characters there are in the
 // string.
 
-
 // function countBs(str) {
 //     let num = 0;
 //     for (let i=0; i <= str.length-1; i++) {
@@ -28,13 +27,13 @@
 // make use of this new function.
 
 function countChar(str, char) {
-    let num = 0;
-    for (let i=0; i <= str.length-1; i++) {
-        if (str[i] === char) {
-            num++;
-        }
+  let num = 0;
+  for (let i = 0; i <= str.length - 1; i++) {
+    if (str[i] === char) {
+      num++;
     }
-    return num;
+  }
+  return num;
 }
 
 console.log(countChar("copacabana", "a"));

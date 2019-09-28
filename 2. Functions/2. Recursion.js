@@ -14,13 +14,13 @@
 // way to fix this?
 
 function isEven(number) {
-    let result;
-    let numberAbsoluteValue = Math.abs(number);
+  let result;
+  let numberAbsoluteValue = Math.abs(number);
 
-    if (numberAbsoluteValue === 0) return "even";
-    if(numberAbsoluteValue === 1) return "odd";
+  if (numberAbsoluteValue === 0) return "even";
+  if (numberAbsoluteValue === 1) return "odd";
 
-    return isEven(number - 2);
+  return isEven(number - 2);
 }
 
 console.log(isEven(0));

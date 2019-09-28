@@ -36,19 +36,18 @@
 //     9]. Make sure it also works with negative step values so that range(5, 2, -1)
 // produces [5, 4, 3, 2].
 
-function range(start, end, step=1) {
-
-    let arrOfNumbers = [];
-    if(start < end) {
-        for (let i = start; i <= end; i += step) {
-            arrOfNumbers.push(i);
-        }
-    } else if (start >= end) {
-        for (let i = start; i >= end; i += step) {
-            arrOfNumbers.push(i);
-        }
+function range(start, end, step = 1) {
+  let arrOfNumbers = [];
+  if (start < end) {
+    for (let i = start; i <= end; i += step) {
+      arrOfNumbers.push(i);
     }
-    return arrOfNumbers;
+  } else if (start >= end) {
+    for (let i = start; i >= end; i += step) {
+      arrOfNumbers.push(i);
+    }
+  }
+  return arrOfNumbers;
 }
 
 console.log(range(1, 10, 2));
