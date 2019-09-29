@@ -36,21 +36,33 @@
 //   }
 // };
 
-function arrayToList(arr) {
-  let list = {};
-
-  for (let i = arr.length - 1; i >= 0; i--) {
-    list = { value: arr[i], rest: list };
-  }
-
-  return list;
-}
-
-console.log(arrayToList([1, 2, 3]));
+// function arrayToList(arr) {
+//   let list = {};
+//
+//   for (let i = arr.length - 1; i >= 0; i--) {
+//     list = { value: arr[i], rest: list };
+//   }
+//
+//   return list;
+// }
+//
+// console.log(arrayToList([1, 2, 3]));
 
 //
 // Also write a listToArray function
 // that produces an array from a list.
+
+function listToArray(list) {
+  let arr = [];
+  for (let node = list; node.value; node = node.rest) {
+    arr.push(node.value);
+  }
+  return arr;
+}
+
+const initList = { value: 1, rest: { value: 2, rest: { value: 3, rest: {} } } };
+console.log(listToArray(initList));
+
 //
 // Then add a helper function prepend, which
 // takes an element and a list and creates a new list that adds the element to the
