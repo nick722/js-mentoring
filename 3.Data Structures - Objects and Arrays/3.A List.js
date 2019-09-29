@@ -35,22 +35,34 @@
 //     }
 //   }
 // };
+//=====================================================================
 
-// function arrayToList(arr) {
-//   let list = {};
-//
-//   for (let i = arr.length - 1; i >= 0; i--) {
-//     list = { value: arr[i], rest: list };
-//   }
-//
-//   return list;
-// }
+/**
+ * arrayToList
+ * @param arr
+ */
+
+function arrayToList(arr) {
+  let list = {};
+
+  for (let i = arr.length - 1; i >= 0; i--) {
+    list = { value: arr[i], rest: list };
+  }
+
+  return list;
+}
 //
 // console.log(arrayToList([1, 2, 3]));
 
-//
+//=================================================================
 // Also write a listToArray function
 // that produces an array from a list.
+
+/**
+ * listToArray
+ * @param list
+ * @returns {Array}
+ */
 
 function listToArray(list) {
   let arr = [];
@@ -59,15 +71,31 @@ function listToArray(list) {
   }
   return arr;
 }
-
-const initList = { value: 1, rest: { value: 2, rest: { value: 3, rest: {} } } };
-console.log(listToArray(initList));
-
 //
+// const initList = { value: 1, rest: { value: 2, rest: { value: 3, rest: {} } } };
+// console.log(listToArray(initList));
+
+//=============================================================
 // Then add a helper function prepend, which
 // takes an element and a list and creates a new list that adds the element to the
 // front of the input list,
-//
+
+/**
+ * prepend
+ * @param el
+ * @param list
+ */
+
+function prepend(el, list) {
+  let newList = { value: el, rest: list };
+  return newList;
+}
+const initList = { value: 1, rest: { value: 2, rest: { value: 3, rest: {} } } };
+const finalList = prepend(22, initList);
+console.log(finalList);
+console.log(listToArray(finalList));
+
+//==================================================================
 // and nth, which takes a list and a number
 // and returns the element at the given position in the list
 // (with zero referring to the first element)
