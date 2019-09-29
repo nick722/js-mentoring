@@ -37,11 +37,6 @@
 // };
 //=====================================================================
 
-/**
- * arrayToList
- * @param arr
- */
-
 function arrayToList(arr) {
   let list = {};
 
@@ -57,12 +52,6 @@ function arrayToList(arr) {
 //=================================================================
 // Also write a listToArray function
 // that produces an array from a list.
-
-/**
- * listToArray
- * @param list
- * @returns {Array}
- */
 
 function listToArray(list) {
   let arr = [];
@@ -80,20 +69,14 @@ function listToArray(list) {
 // takes an element and a list and creates a new list that adds the element to the
 // front of the input list,
 
-/**
- * prepend
- * @param el
- * @param list
- */
-
 function prepend(el, list) {
   let newList = { value: el, rest: list };
   return newList;
 }
-const initList = { value: 1, rest: { value: 2, rest: { value: 3, rest: {} } } };
-const finalList = prepend(22, initList);
-console.log(finalList);
-console.log(listToArray(finalList));
+// const initList = { value: 1, rest: { value: 2, rest: { value: 3, rest: {} } } };
+// const finalList = prepend(22, initList);
+// console.log(finalList);
+// console.log(listToArray(finalList));
 
 //==================================================================
 // and nth, which takes a list and a number
@@ -101,4 +84,33 @@ console.log(listToArray(finalList));
 // (with zero referring to the first element)
 // or undefined when there is no such element.
 
+function nth(list, number) {
+  let position = 0;
+  for (let node = list; node.value; node = node.rest) {
+    if (number === node.value) {
+      return position;
+    }
+    position++;
+  }
+}
+// const initList = {
+//   value: 11,
+//   rest: { value: 22, rest: { value: 33, rest: {} } }
+// };
+// console.log(nth(initList, 22));
+
+//================================================================
 //   If you haven’t already, also write a recursive version of nth.
+
+function recursiveNth(list, number, position = 0) {
+  if (!list.value) return;
+  if (number === list.value) {
+    return position;
+  }
+  return recursiveNth(list.rest, number, ++position);
+}
+const initList = {
+  value: 11,
+  rest: { value: 22, rest: { value: 33, rest: {} } }
+};
+console.log(recursiveNth(initList, 11));
