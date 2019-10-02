@@ -47,7 +47,7 @@ function arrayToList(arr) {
   return list;
 }
 //
-// console.log(arrayToList([1, 2, 3]));
+console.log(arrayToList([1, 2, 3]));
 
 //=================================================================
 // Also write a listToArray function
@@ -113,4 +113,6 @@ const initList = {
   value: 11,
   rest: { value: 22, rest: { value: 33, rest: {} } }
 };
-console.log(recursiveNth(initList, 11));
+// console.log(recursiveNth(initList, 11));
+
+
