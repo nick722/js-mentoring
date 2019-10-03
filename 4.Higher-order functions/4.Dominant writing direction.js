@@ -3,12 +3,34 @@ const SCRIPTS = require("./data/scripts");
 // Write a function that computes the dominant writing direction in a string of
 // text.
 function computeDominantWritingDirection(text) {
-  let dominantWritingDirection = countBy(text, char => {
+  let scriptsAndNumberOfElements = countBy(text, char => {
     let script = characterScript(char.codePointAt(0));
-
     return script ? script.name : "none";
-  });
-  return dominantWritingDirection;
+  }).filter(({ name }) => name != "none");
+
+  const directions = {
+    ltr: 0,
+    rtl: 0,
+    ttb: 0
+  };
+
+  let total = scriptsAndNumberOfElements.reduce((accum, curr) => {
+    let matchingScript = SCRIPTS.filter(s => {
+      return s.name === curr.name;
+    });
+
+    if (matchingScript[0].direction === "ltr") directions.ltr += curr.count;
+    if (matchingScript[0].direction === "rtl") directions.rtl += curr.count;
+    if (matchingScript[0].direction === "ttb") directions.ttb += curr.count;
+  }, 0);
+
+  let maxValue = Math.max(directions.rtl, directions.ltr, directions.ttb);
+
+  let dominantDirection = Object.keys(directions).find(
+    key => directions[key] === maxValue
+  );
+
+  return dominantDirection;
 }
 
 console.log(
