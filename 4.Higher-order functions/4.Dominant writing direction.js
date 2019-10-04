@@ -3,6 +3,11 @@ const SCRIPTS = require("./data/scripts");
 // Write a function that computes the dominant writing direction in a string of
 // text.
 function computeDominantWritingDirection(text) {
+      //todo count characters by a criterion based on characterScript
+      //todo filter out the part of the result that refers to uninteresting (script-less) characters.
+      //todo find the direction with the highest character count - use reduce
+
+    let dominantWritingDirection = countBy(text, char => {
   let scriptsAndNumberOfElementsInThatScipts = countBy(text, char => {
     let script = characterScript(char.codePointAt(0));
     return script ? script.name : "none";
@@ -76,3 +81,7 @@ function countBy(items, groupName) {
 }
 // console.log(countBy([1, 2, 3, 4, 5], n => n > 2));
 //==============================================================
+
+// вызвать строку в контектсте массива
+// перебрать строку
+// с помощью рекурсии
