@@ -22,7 +22,7 @@
 
 class Group {
   static from(iterableObject) {
-    const group =  new Group();
+    const group = new Group();
     for (let item of iterableObject) {
       group.add(item);
     }

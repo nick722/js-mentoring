@@ -1,41 +1,46 @@
 const canvas = document.getElementById("canvas");
-const c = canvas.getContext("2d");
+const canvasContext = canvas.getContext("2d");
 const startButton = document.getElementById("startButton");
-const boxSize = 40;
+const boxSize = 39;
+const borderWidth = 1;
 const boxes = Math.floor(600 / boxSize);
-canvas.addEventListener("click", handleClick, false);
-startButton.addEventListener("click", start);
-drawField();
+canvas.addEventListener("click", e => handleClick(e, canvasContext), false);
+startButton.addEventListener("click", e => start(e, canvasContext));
 
-//elements
-elemLeft = canvas.offsetLeft;
-elemTop = canvas.offsetTop;
-elements = [
-  [
-    {
-      x: 0,
-      y: 0,
-      filled: false
-    }
-  ]
-];
+const elemLeft = canvas.offsetLeft;
+const elemTop = canvas.offsetTop;
 
-function drawField() {
+console.log(createArrayOfCells(boxSize, borderWidth, canvasContext));
+
+function createArrayOfCells(cellSize, border, c) {
+  const elements = [];
+  let widthValue = 0;
+  let heightValue = 0;
   c.beginPath();
-  c.lineWidth = 0.5;
+  c.lineWidth = border;
   c.strokeStyle = "black";
-  for (let row = 0; row < boxes; row++) {
-    for (let column = 0; column < boxes; column++) {
-      let x = column * boxSize;
+  c.fillStyle = "black";
+  for (let row = 0; row < 2; row++) {
+    for (let column = 0; column < 3; column++) {
+      elements.push({
+        x: widthValue,
+        y: heightValue,
+        filled: false,
+        willDie: false
+      });
+      widthValue += cellSize + border;
+      let x = column * cellSize + border;
       let y = row * boxSize;
-      c.rect(x, y, boxSize, boxSize);
+      c.rect(x, y, cellSize, cellSize);
       c.stroke();
     }
+    heightValue += cellSize + border;
   }
   c.closePath();
+  return elements;
 }
 
-function handleClick(e) {
+function handleClick(e, c) {
   c.fillStyle = "black";
 
   c.fillRect(
@@ -44,30 +49,9 @@ function handleClick(e) {
     boxSize,
     boxSize
   );
-
-  // let x = e.pageX - elemLeft;
-  // let y = e.pageY - elemTop;
-  //
-  // console.log("elements:", elements);
-  // console.log("element.top:", element.top);
-  // console.log("element.height:", element.height);
-  //
-  // elements.forEach(elem => {
-  //   // console.log("forEach called");
-  //
-  //   if (
-  //     y > elem.top &&
-  //     y < elem.top + elem.height &&
-  //     x > elem.left &&
-  //     x < elem.left + elem.width
-  //   ) {
-  //     console.log("clicked an element");
-  //   }
-  //   console.log("else");
-  // });
 }
 
-function start(e) {
+function start(e, c) {
   c.fillStyle = "red";
 
   c.fillRect(
