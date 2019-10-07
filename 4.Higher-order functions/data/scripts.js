@@ -611,7 +611,7 @@ var SCRIPTS = [
       [183984, 191457],
       [194560, 195102]
     ],
-    direction: "ltr",
+    direction: "rtl",
     year: -1100,
     living: true,
     link: "https://en.wikipedia.org/wiki/Chinese_characters"

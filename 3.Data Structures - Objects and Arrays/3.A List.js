@@ -114,5 +114,3 @@ const initList = {
   rest: { value: 22, rest: { value: 33, rest: {} } }
 };
 // console.log(recursiveNth(initList, 11));
-
-
