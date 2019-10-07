@@ -22,8 +22,9 @@
 
 class Group {
   static from(iterableObject) {
+    const group =  new Group();
     for (let item of iterableObject) {
-      this.add(item);
+      group.add(item);
     }
     return group;
   }
@@ -43,12 +44,13 @@ class Group {
 }
 
 let group = new Group([]);
-group.add(1);
-group.add(2);
-group.add(1);
-group.delete(1);
-group.has(1);
-Group.from([3, 4]);
+// group.add(1);
+// group.add(2);
+// group.add(1);
+// group.delete(1);
+// group.has(1);
+const groupFrom = Group.from([3, 4, 4]);
+console.log(groupFrom);
 
-console.log(group);
-console.log(group.has(2));
+// console.log(group);
+// console.log(group.has(2));
