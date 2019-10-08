@@ -55,8 +55,7 @@ function handleClick(e, gridCells) {
       cell.y + BOX_SIZE > y
     ) {
       cell.filled = !cell.filled;
-      C.fillStyle = cell.filled ? "black" : "white";
-      C.fillRect(cell.x + 1, cell.y + 1, BOX_SIZE - 1, BOX_SIZE - 1);
+      paint(cell.filled, cell);
     }
   }
 }
@@ -64,13 +63,12 @@ function handleClick(e, gridCells) {
 function start(grid) {
   for (let cell of grid) {
     if (cell.filled) {
-      C.fillStyle = "red";
-      C.fillRect(cell.x + 1, cell.y + 1, BOX_SIZE - 1, BOX_SIZE - 1);
+      paint(!cell.filled, cell);
     }
   }
 }
 
-// function paint(shouldPaint) {
-//   C.fillStyle = shouldPaint ? "black" : "white";
-//   C.fillRect(cell.x + 1, cell.y + 1, cellSize - 1, cellSize - 1);
-// }
+function paint(shouldPaint, cell) {
+  C.fillStyle = shouldPaint ? "black" : "white";
+  C.fillRect(cell.x + 1, cell.y + 1, BOX_SIZE - 1, BOX_SIZE - 1);
+}
