@@ -1,63 +1,76 @@
 const canvas = document.getElementById("canvas");
-const canvasContext = canvas.getContext("2d");
 const startButton = document.getElementById("startButton");
-const boxSize = 39;
-const borderWidth = 1;
-const boxes = Math.floor(600 / boxSize);
-canvas.addEventListener("click", e => handleClick(e, canvasContext), false);
-startButton.addEventListener("click", e => start(e, canvasContext));
+const C = canvas.getContext("2d");
+const BOX_SIZE = 39;
+const BORDER_WIDTH = 1;
+const FULL_SIZE = BOX_SIZE + BORDER_WIDTH;
+// const boxes = Math.floor(600 / boxSize);
+canvas.addEventListener("click", e => handleClick(e, arrayOfCells), false);
 
-const elemLeft = canvas.offsetLeft;
-const elemTop = canvas.offsetTop;
+// const elemLeft = canvas.offsetLeft;
+// const elemTop = canvas.offsetTop;
 
-console.log(createArrayOfCells(boxSize, borderWidth, canvasContext));
+const arrayOfCells = createArrayOfCells();
+startButton.addEventListener("click", e => start(arrayOfCells));
 
-function createArrayOfCells(cellSize, border, c) {
+function createArrayOfCells() {
   const elements = [];
-  let widthValue = 0;
   let heightValue = 0;
-  c.beginPath();
-  c.lineWidth = border;
-  c.strokeStyle = "black";
-  c.fillStyle = "black";
-  for (let row = 0; row < 2; row++) {
-    for (let column = 0; column < 3; column++) {
+  C.beginPath();
+  C.lineWidth = BORDER_WIDTH;
+  C.strokeStyle = "black";
+  C.fillStyle = "black";
+  for (let row = 0; row < 10; row++) {
+    let widthValue = 0;
+    for (let column = 0; column < 20; column++) {
       elements.push({
         x: widthValue,
         y: heightValue,
         filled: false,
         willDie: false
       });
-      widthValue += cellSize + border;
-      let x = column * cellSize + border;
-      let y = row * boxSize;
-      c.rect(x, y, cellSize, cellSize);
-      c.stroke();
+      widthValue += FULL_SIZE;
+      let x = column * FULL_SIZE;
+      let y = row * FULL_SIZE;
+      C.rect(x, y, FULL_SIZE, FULL_SIZE);
+      C.stroke();
     }
-    heightValue += cellSize + border;
+    heightValue += FULL_SIZE;
   }
-  c.closePath();
+  C.closePath();
   return elements;
 }
 
-function handleClick(e, c) {
-  c.fillStyle = "black";
+function handleClick(e, gridCells) {
+  x = e.offsetX;
+  y = e.offsetY;
 
-  c.fillRect(
-    Math.floor(e.offsetX / boxSize) * boxSize,
-    Math.floor(e.offsetY / boxSize) * boxSize,
-    boxSize,
-    boxSize
-  );
+  // console.log("gridCells:", gridCells);
+
+  for (let cell of gridCells) {
+    if (
+      cell.x < x &&
+      cell.x + BOX_SIZE > x &&
+      cell.y < y &&
+      cell.y + BOX_SIZE > y
+    ) {
+      cell.filled = !cell.filled;
+      C.fillStyle = cell.filled ? "black" : "white";
+      C.fillRect(cell.x + 1, cell.y + 1, BOX_SIZE - 1, BOX_SIZE - 1);
+    }
+  }
 }
 
-function start(e, c) {
-  c.fillStyle = "red";
-
-  c.fillRect(
-    Math.floor(e.offsetX / boxSize) * boxSize,
-    Math.floor(e.offsetY / boxSize) * boxSize,
-    boxSize,
-    boxSize
-  );
+function start(grid) {
+  for (let cell of grid) {
+    if (cell.filled) {
+      C.fillStyle = "red";
+      C.fillRect(cell.x + 1, cell.y + 1, BOX_SIZE - 1, BOX_SIZE - 1);
+    }
+  }
 }
+
+// function paint(shouldPaint) {
+//   C.fillStyle = shouldPaint ? "black" : "white";
+//   C.fillRect(cell.x + 1, cell.y + 1, cellSize - 1, cellSize - 1);
+// }
