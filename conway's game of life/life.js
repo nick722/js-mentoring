@@ -74,14 +74,24 @@ function start(grid) {
   //   }
   // }
   for (let i = 0; i < grid.length; i++) {
-    console.log("grid[i]:", grid[i]);
-    // // FOR LIVING CELLS
-    // if (grid[i].filled) {
-    //   for(let j = )
-    //
-    //
-    //   paint(true, grid[i - 1]);
-    // }
+    for (let j = 0; j < grid[i].length; j++) {
+      // console.log("grid[i][j]:", grid[i][j]);
+      // FOR LIVING CELLS
+      if (grid[i][j].filled) {
+        console.log("grid[i][j]:", grid[i][j]);
+        for (let k = i - 1; k <= i + 1; k++) {
+          // if (!k) continue;
+          for (let m = j - 1; m <= j + 1; m++) {
+            if (!grid[k][m]) continue;
+            // console.log("grid[k][m]:", grid[k][m]);
+            // if (k === i && m === j) continue;
+            paint(true, grid[k][m]);
+          }
+        }
+
+        // paint(true, grid[i - 1]);
+      }
+    }
   }
 }
 
