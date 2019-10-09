@@ -22,8 +22,9 @@ function createArrayOfCells() {
   C.fillStyle = "black";
   for (let row = 0; row < 10; row++) {
     let widthValue = 0;
+    elements.push([]);
     for (let column = 0; column < 20; column++) {
-      elements.push({
+      elements[row].push({
         x: widthValue,
         y: heightValue,
         filled: false,
@@ -47,27 +48,48 @@ function handleClick(e, gridCells) {
 
   // console.log("gridCells:", gridCells);
 
-  for (let cell of gridCells) {
-    if (
-      cell.x < x &&
-      cell.x + BOX_SIZE > x &&
-      cell.y < y &&
-      cell.y + BOX_SIZE > y
-    ) {
-      cell.filled = !cell.filled;
-      paint(cell.filled, cell);
+  for (let subGrid of gridCells) {
+    for (let cell of subGrid) {
+      if (
+        cell.x < x &&
+        cell.x + BOX_SIZE > x &&
+        cell.y < y &&
+        cell.y + BOX_SIZE > y
+      ) {
+        cell.filled = !cell.filled;
+        paint(cell.filled, cell);
+      }
     }
   }
 }
 
+/**
+ * Starts the game
+ * @param {Array} grid
+ */
 function start(grid) {
-  for (let cell of grid) {
-    if (cell.filled) {
-      paint(!cell.filled, cell);
-    }
+  // for (let cell of grid) {
+  //   if (cell.filled) {
+  //     paint(!cell.filled, cell);
+  //   }
+  // }
+  for (let i = 0; i < grid.length; i++) {
+    console.log("grid[i]:", grid[i]);
+    // // FOR LIVING CELLS
+    // if (grid[i].filled) {
+    //   for(let j = )
+    //
+    //
+    //   paint(true, grid[i - 1]);
+    // }
   }
 }
 
+/**
+ * Paints the cell
+ * @param {boolean} shouldPaint
+ * @param {object} cell
+ */
 function paint(shouldPaint, cell) {
   C.fillStyle = shouldPaint ? "black" : "white";
   C.fillRect(cell.x + 1, cell.y + 1, BOX_SIZE - 1, BOX_SIZE - 1);
