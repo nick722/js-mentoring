@@ -46,8 +46,6 @@ function handleClick(e, gridCells) {
   x = e.offsetX;
   y = e.offsetY;
 
-  // console.log("gridCells:", gridCells);
-
   for (let subGrid of gridCells) {
     for (let cell of subGrid) {
       if (
@@ -68,28 +66,17 @@ function handleClick(e, gridCells) {
  * @param {Array} grid
  */
 function start(grid) {
-  // for (let cell of grid) {
-  //   if (cell.filled) {
-  //     paint(!cell.filled, cell);
-  //   }
-  // }
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
-      // console.log("grid[i][j]:", grid[i][j]);
-      // FOR LIVING CELLS
       if (grid[i][j].filled) {
-        console.log("grid[i][j]:", grid[i][j]);
         for (let k = i - 1; k <= i + 1; k++) {
-          // if (!k) continue;
+          if (!grid[k]) continue;
           for (let m = j - 1; m <= j + 1; m++) {
             if (!grid[k][m]) continue;
-            // console.log("grid[k][m]:", grid[k][m]);
-            // if (k === i && m === j) continue;
+            if (k === i && m === j) continue;
             paint(true, grid[k][m]);
           }
         }
-
-        // paint(true, grid[i - 1]);
       }
     }
   }
