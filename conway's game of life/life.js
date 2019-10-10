@@ -68,16 +68,35 @@ function handleClick(e, gridCells) {
 function start(grid) {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
+      let sum = 0;
       if (grid[i][j].filled) {
         for (let k = i - 1; k <= i + 1; k++) {
           if (!grid[k]) continue;
           for (let m = j - 1; m <= j + 1; m++) {
             if (!grid[k][m]) continue;
             if (k === i && m === j) continue;
-            paint(true, grid[k][m]);
+            console.log("grid[k][m].filled:", grid[k][m].filled);
+            if (grid[k][m].filled) {
+              sum++;
+            }
           }
         }
+        console.log("sum:", sum);
+        if (grid[i][j].filled && (sum < 2 || sum > 3)) {
+          grid[i][j].willDie = false;
+          // paint(false, grid[i][j]);
+        }
+        if (!grid[i][j].filled && sum === 3) {
+          grid[i][j].willDie = true;
+          // paint(true, grid[i][j]);
+        }
       }
+    }
+  }
+
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      paint(grid[i][j].willDie, grid[i][j]);
     }
   }
 }
