@@ -1,13 +1,20 @@
 const canvas = document.getElementById("canvas");
 const startButton = document.getElementById("startButton");
+const stopButton = document.getElementById("stopButton");
 const C = canvas.getContext("2d");
 const BOX_SIZE = 39;
 const BORDER_WIDTH = 1;
 const FULL_SIZE = BOX_SIZE + BORDER_WIDTH;
+let intervalId;
 canvas.addEventListener("click", e => handleClick(e, arrayOfCells), false);
 
 const arrayOfCells = createArrayOfCells();
 startButton.addEventListener("click", () => game(arrayOfCells));
+stopButton.addEventListener("click", () => stopTheGame(intervalId));
+
+function stopTheGame(id) {
+  clearInterval(id);
+}
 
 function createArrayOfCells() {
   const elements = [];
@@ -62,7 +69,8 @@ function handleClick(e, gridCells) {
  * Starts the game
  * @param {Array} grid
  */
-const game = grid => setInterval(() => start(grid), 700);
+const game = grid => (intervalId = setInterval(() => start(grid), 700));
+
 function start(grid) {
   countMarkedAdjustedCells(grid);
   paintKilled(grid);
