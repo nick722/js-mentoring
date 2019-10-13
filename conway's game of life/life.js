@@ -11,7 +11,7 @@ canvas.addEventListener("click", e => handleClick(e, arrayOfCells), false);
 // const elemTop = canvas.offsetTop;
 
 const arrayOfCells = createArrayOfCells();
-startButton.addEventListener("click", e => start(arrayOfCells));
+startButton.addEventListener("click", () => start(arrayOfCells));
 
 function createArrayOfCells() {
   const elements = [];
@@ -28,7 +28,8 @@ function createArrayOfCells() {
         x: widthValue,
         y: heightValue,
         filled: false,
-        willDie: false
+        willDie: false,
+        resurrect: false
       });
       widthValue += FULL_SIZE;
       let x = column * FULL_SIZE;
@@ -66,37 +67,46 @@ function handleClick(e, gridCells) {
  * @param {Array} grid
  */
 function start(grid) {
+  countMarkedAdjustedCells(grid);
+  paintKilled(grid);
+}
+
+function countMarkedAdjustedCells(grid) {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
       let sum = 0;
-      if (grid[i][j].filled) {
-        for (let k = i - 1; k <= i + 1; k++) {
-          if (!grid[k]) continue;
-          for (let m = j - 1; m <= j + 1; m++) {
-            if (!grid[k][m]) continue;
-            if (k === i && m === j) continue;
-            console.log("grid[k][m].filled:", grid[k][m].filled);
-            if (grid[k][m].filled) {
-              sum++;
-            }
+      for (let k = i - 1; k <= i + 1; k++) {
+        if (!grid[k]) continue;
+        for (let m = j - 1; m <= j + 1; m++) {
+          if (!grid[k][m]) continue;
+          if (k === i && m === j) continue;
+          if (grid[k][m].filled) {
+            sum++;
           }
         }
-        console.log("sum:", sum);
-        if (grid[i][j].filled && (sum < 2 || sum > 3)) {
-          grid[i][j].willDie = false;
-          // paint(false, grid[i][j]);
-        }
-        if (!grid[i][j].filled && sum === 3) {
-          grid[i][j].willDie = true;
-          // paint(true, grid[i][j]);
-        }
       }
+      killOrSpare(grid[i][j], sum);
     }
   }
+}
 
+function killOrSpare(cell, sumOfNeighbours) {
+  if (cell.filled && (sumOfNeighbours < 2 || sumOfNeighbours > 3)) {
+    cell.willDie = true;
+  }
+  if (!cell.filled && sumOfNeighbours === 3) {
+    cell.resurrect = true;
+  }
+}
+
+function paintKilled(grid) {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
-      paint(grid[i][j].willDie, grid[i][j]);
+      if (grid[i][j].filled && grid[i][j].willDie) grid[i][j].filled = false;
+      if (!grid[i][j].filled && grid[i][j].resurrect) grid[i][j].filled = true;
+      paint(grid[i][j].filled, grid[i][j]);
+      grid[i][j].willDie = false;
+      grid[i][j].resurrect = false;
     }
   }
 }
