@@ -4,14 +4,10 @@ const C = canvas.getContext("2d");
 const BOX_SIZE = 39;
 const BORDER_WIDTH = 1;
 const FULL_SIZE = BOX_SIZE + BORDER_WIDTH;
-// const boxes = Math.floor(600 / boxSize);
 canvas.addEventListener("click", e => handleClick(e, arrayOfCells), false);
 
-// const elemLeft = canvas.offsetLeft;
-// const elemTop = canvas.offsetTop;
-
 const arrayOfCells = createArrayOfCells();
-startButton.addEventListener("click", () => start(arrayOfCells));
+startButton.addEventListener("click", () => game(arrayOfCells));
 
 function createArrayOfCells() {
   const elements = [];
@@ -66,6 +62,7 @@ function handleClick(e, gridCells) {
  * Starts the game
  * @param {Array} grid
  */
+const game = grid => setInterval(() => start(grid), 700);
 function start(grid) {
   countMarkedAdjustedCells(grid);
   paintKilled(grid);
